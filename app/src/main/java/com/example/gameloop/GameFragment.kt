@@ -5,32 +5,40 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import com.example.gameloop.R.color.*
 import com.example.gameloop.databinding.FragmentGameBinding
-import com.example.gameloop.databinding.FragmentMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 
-class GameFragment : Fragment(), Runnable {
+class GameFragment : Fragment(){//R.layout.fragment_game) {
 
-    private var _binding: FragmentGameBinding? = null
-    private val binding get() = _binding!!
-    private var isRunning = true
+    //private var _binding: FragmentGameBinding? = null
+    //private val binding get() = _binding!!
+    private lateinit var game: Game
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGameBinding.inflate(inflater,container,false)
+       // _binding = FragmentGameBinding.inflate(inflater,container,false)
+        game = Game(requireContext())
 
-        run()
 
-        return binding.root
+
+        return game
     }
 
-    override fun run() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //game = Game(requireContext())
+        //_binding = FragmentGameBinding.bind(game)
+        //_binding = binding
 
-        while (isRunning){
+    }
 
-        }
+    override fun onDestroyView() {
+        //_binding = null
+        super.onDestroyView()
     }
 
 }
