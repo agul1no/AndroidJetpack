@@ -1,10 +1,12 @@
 package com.example.gameloop
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.Drawable
+import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.View
@@ -16,6 +18,9 @@ class Game(context: Context) : SurfaceView(context), SurfaceHolder.Callback {
     var paint: Paint = Paint()
     var surfaceView = holder
     var gameLoop = GameLoop(this, surfaceView)
+    var player = Player(context)
+    var playerXPosition = 580
+    var playerYPosition = 1800
 
     init {
         paint.isFilterBitmap = true
@@ -25,33 +30,45 @@ class Game(context: Context) : SurfaceView(context), SurfaceHolder.Callback {
         surfaceView.addCallback(this)
     }
 
-    override fun draw(canvas: Canvas?) {
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        //return super.onTouchEvent(event)
+
+        playerXPosition = event?.x!!.toInt()
+        playerYPosition = event.y.toInt()
+        invalidate()
+        return true
+    }
+
+    override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
         var backgroundColor = ContextCompat.getColor(context,R.color.black)
-        canvas?.drawColor(backgroundColor)
+        canvas.drawColor(backgroundColor)
         drawUPS(canvas)
         drawFPS(canvas)
+
+        player.draw(canvas, playerXPosition, playerYPosition)
     }
 
     fun drawUPS(canvas: Canvas?){
         var averageUPS = gameLoop.getAverageUPS().toString()
         val color = ContextCompat.getColor(context, R.color.red)
         paint.color = color
-        paint.textSize = 70f
-        canvas?.drawText("UPS: $averageUPS",200f,250f, paint)
+        paint.textSize = 50f
+        canvas?.drawText("UPS: $averageUPS",100f,250f, paint)
     }
 
     fun drawFPS(canvas: Canvas?){
         var averageFPS = gameLoop.getAverageFPS().toString()
         val color = ContextCompat.getColor(context, R.color.red)
         paint.color = color
-        paint.textSize = 70f
-        canvas?.drawText("FPS: $averageFPS",200f,350f, paint)
+        paint.textSize = 50f
+        canvas?.drawText("FPS: $averageFPS",100f,350f, paint)
     }
 
     fun update(){
-
+        player.update()
     }
 
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {

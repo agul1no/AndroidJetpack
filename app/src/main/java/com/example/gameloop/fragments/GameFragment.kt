@@ -1,13 +1,11 @@
-package com.example.gameloop
+package com.example.gameloop.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.gameloop.R.color.*
-import com.example.gameloop.databinding.FragmentGameBinding
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.gameloop.Game
 
 class GameFragment : Fragment(){//R.layout.fragment_game) {
 

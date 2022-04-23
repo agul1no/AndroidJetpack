@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -28,10 +29,12 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
             if (nd.id == R.id.splashFragment || nd.id == R.id.gameFragment) {
                 supportActionBar?.hide()
-                window.insetsController?.hide(WindowInsets.Type.statusBars())
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+
+                //window.insetsController?.hide(WindowInsets.Type.statusBars())
             } else {
                 supportActionBar?.show()
-                window.insetsController?.show(WindowInsets.Type.statusBars())
+                //window.insetsController?.show(WindowInsets.Type.statusBars())
             }
         }
 
