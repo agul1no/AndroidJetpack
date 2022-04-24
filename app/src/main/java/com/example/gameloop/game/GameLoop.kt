@@ -1,23 +1,26 @@
-package com.example.gameloop
+package com.example.gameloop.game
 
 import android.graphics.Canvas
 import android.util.Log
 import android.view.SurfaceHolder
+import com.example.gameloop.game.Game
 import java.lang.Exception
 import java.lang.IllegalArgumentException
+import java.util.*
+import kotlin.concurrent.schedule
 
-class GameLoop(game: Game, surfaceHolder: SurfaceHolder): Thread() {
+class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder): Thread() {
 
     private var isRunning = false
     private lateinit var canvas: Canvas
-    private var surfaceHolder = surfaceHolder
-    private var game = game
     private var averageUPS = 0.0
     private var averageFPS = 0.0
 
-    private val MAX_UPS = 60.0
     private val UPS_PERIOD = 1E+3/MAX_UPS
 
+    companion object{
+        val MAX_UPS = 60.0
+    }
 
     fun getAverageUPS(): Double{
         return averageUPS
