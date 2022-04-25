@@ -20,7 +20,7 @@ import kotlin.concurrent.schedule
 
 class EnemyObject(context: Context, val positionX: Int, var positionY: Int, val image: Bitmap) {
 
-    private val SPAWN_PER_MINUTES = 30
+    private val SPAWN_PER_MINUTES = 100
     private val SPAWN_PER_SECONDS:Double = SPAWN_PER_MINUTES/60.0
     private val UPDATES_PER_SPAWN: Double = GameLoop.MAX_UPS/SPAWN_PER_SECONDS
     private var updatesUntilNextSpawn: Double = UPDATES_PER_SPAWN
@@ -32,6 +32,10 @@ class EnemyObject(context: Context, val positionX: Int, var positionY: Int, val 
 
     fun update(){
         positionY++
+    }
+
+    fun isPositionYOutOfView(): Boolean{
+        return positionY > 2600
     }
 
     fun readyToSpawn(): Boolean{

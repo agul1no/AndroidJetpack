@@ -2,8 +2,7 @@ package com.example.gameloop.game
 
 import android.content.Context
 import android.graphics.*
-import android.util.DisplayMetrics
-import android.util.Log
+import java.util.function.Predicate
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -18,10 +17,10 @@ class Game(context: Context) : SurfaceView(context), SurfaceHolder.Callback{
     private var player = Player(context)
     private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small))
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
-    private var itemsToRemove = mutableListOf<EnemyObject>()
+    //private var itemsToRemove = mutableListOf<EnemyObject>()
     var playerXPosition = 580
     var playerYPosition = 1800
-    private val OBJECT_VELOCITY = 18
+    private val OBJECT_VELOCITY = 20
 
     init {
         paint.isFilterBitmap = true
@@ -80,16 +79,18 @@ class Game(context: Context) : SurfaceView(context), SurfaceHolder.Callback{
         //enemyObject.update()
 
         if(enemyObject.readyToSpawn()){
-            var newEnemy = EnemyObject(context,generateARandomXPosition(),200,generateImageRandomly())
+            var newEnemy = EnemyObject(context,generateARandomXPosition(),0,generateImageRandomly())
             listOfEnemyObject.add(newEnemy)
         }
         for (item in listOfEnemyObject) {
             enemyObject.update()
-            //TODO implement a function to remove the invisible items
-//            if(item.positionY > 3000){
-//                itemsToRemove.add(item)
-//            }
-//            listOfEnemyObject.removeAll(itemsToRemove)
+        }
+        var enemyObjectIterator = listOfEnemyObject.iterator()
+        for (i in enemyObjectIterator){
+            if (i.isPositionYOutOfView()) {enemyObjectIterator.remove()}
+            if ((i.positionY+100 > playerYPosition-350 && i.positionY+100<playerYPosition) && (i.positionX > playerXPosition-250 && i.positionX < playerXPosition+120)){
+                enemyObjectIterator.remove()
+            }
         }
     }
 
