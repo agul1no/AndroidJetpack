@@ -2,6 +2,7 @@ package com.example.gameloop.game
 
 import android.content.Context
 import android.graphics.*
+import android.util.DisplayMetrics
 import java.util.function.Predicate
 import android.view.MotionEvent
 import android.view.SurfaceHolder
@@ -9,7 +10,7 @@ import android.view.SurfaceView
 import androidx.core.content.ContextCompat
 import com.example.gameloop.R
 
-class Game(context: Context) : SurfaceView(context), SurfaceHolder.Callback{
+class Game(context: Context, screenWith: Int, screenHeight: Int) : SurfaceView(context), SurfaceHolder.Callback{
 
     private var paint: Paint = Paint()
     private var surfaceView = holder
@@ -18,8 +19,10 @@ class Game(context: Context) : SurfaceView(context), SurfaceHolder.Callback{
     private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small))
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
     //private var itemsToRemove = mutableListOf<EnemyObject>()
-    var playerXPosition = 580
-    var playerYPosition = 1800
+    val metrics = DisplayMetrics()
+
+    var playerXPosition = screenWith/2  //580
+    var playerYPosition = screenHeight*4/5  //1800
     private val OBJECT_VELOCITY = 20
 
     init {
@@ -108,7 +111,7 @@ class Game(context: Context) : SurfaceView(context), SurfaceHolder.Callback{
         return bitmap
     }
 
-    fun generateARandomXPosition(): Int{
+    fun generateARandomXPosition(): Int{  /** display.width has to be changed but it work for now **/
         var randomXPositionEnemy = (60..display.width-60).random()
         return randomXPositionEnemy
     }

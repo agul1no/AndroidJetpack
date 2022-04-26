@@ -1,6 +1,7 @@
 package com.example.gameloop.fragments
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,7 +23,11 @@ class GameFragment : Fragment(){//R.layout.fragment_game) {
         savedInstanceState: Bundle?
     ): View? {
        // _binding = FragmentGameBinding.inflate(inflater,container,false)
-        game = Game(requireContext())
+        val metrics = DisplayMetrics()
+        activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
+        val screenWidth = metrics.widthPixels
+        val screenHeight = metrics.heightPixels
+        game = Game(requireContext(), screenWidth, screenHeight)
 
 
         return game
