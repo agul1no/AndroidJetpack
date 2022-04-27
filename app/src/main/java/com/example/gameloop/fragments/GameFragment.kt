@@ -1,12 +1,14 @@
 package com.example.gameloop.fragments
 
 import android.os.Bundle
+import android.os.Vibrator
 import android.util.DisplayMetrics
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.getSystemService
 import com.example.gameloop.game.Game
 import java.util.*
 import kotlin.concurrent.schedule
@@ -27,7 +29,8 @@ class GameFragment : Fragment(){//R.layout.fragment_game) {
         activity?.windowManager?.defaultDisplay?.getMetrics(metrics)
         val screenWidth = metrics.widthPixels
         val screenHeight = metrics.heightPixels
-        game = Game(requireContext(), screenWidth, screenHeight)
+        var vibrator = activity?.getSystemService<Vibrator>()
+        game = Game(requireContext(), screenWidth, screenHeight, vibrator)
 
 
         return game

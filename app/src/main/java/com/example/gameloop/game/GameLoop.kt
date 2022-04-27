@@ -1,6 +1,8 @@
 package com.example.gameloop.game
 
 import android.graphics.Canvas
+import android.os.Build
+import android.os.Vibrator
 import android.util.Log
 import android.view.SurfaceHolder
 import com.example.gameloop.game.Game
@@ -9,7 +11,7 @@ import java.lang.IllegalArgumentException
 import java.util.*
 import kotlin.concurrent.schedule
 
-class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder): Thread() {
+class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder, private val vibrator: Vibrator?): Thread() {
 
     private var isRunning = false
     private lateinit var canvas: Canvas
@@ -34,6 +36,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder)
         isRunning = true
         start()
     }
+
     override fun run() {
 
         // declare time and cycle count variable
@@ -52,7 +55,9 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder)
         try {
             canvas = surfaceHolder.lockCanvas()
             synchronized(surfaceHolder){
-                game.update()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    game.update(vibrator)
+                }
                 updateCount++
                 game.draw(canvas)
             }
@@ -81,7 +86,9 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder)
             }
             // Skip frames to keep up with the target UPS
             while (sleepTime < 0 && updateCount < MAX_UPS -1){
-                game.update()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    game.update(vibrator)
+                }
                 updateCount++
                 elapsedTime = System.currentTimeMillis() - startTime
                 sleepTime = (updateCount*UPS_PERIOD - elapsedTime).toLong()

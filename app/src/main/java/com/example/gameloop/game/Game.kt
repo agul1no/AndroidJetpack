@@ -2,19 +2,23 @@ package com.example.gameloop.game
 
 import android.content.Context
 import android.graphics.*
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.DisplayMetrics
 import java.util.function.Predicate
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.gameloop.R
 
-class Game(context: Context, screenWith: Int, screenHeight: Int) : SurfaceView(context), SurfaceHolder.Callback{
+class Game(context: Context, screenWith: Int, screenHeight: Int, vibrator: Vibrator?) : SurfaceView(context), SurfaceHolder.Callback{
 
     private var paint: Paint = Paint()
     private var surfaceView = holder
-    private var gameLoop = GameLoop(this, surfaceView)
+    private var gameLoop = GameLoop(this, surfaceView,vibrator)
     private var player = Player(context)
     private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small))
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
@@ -77,7 +81,7 @@ class Game(context: Context, screenWith: Int, screenHeight: Int) : SurfaceView(c
         canvas?.drawText("FPS: $averageFPS",100f,350f, paint)
     }
 
-    fun update(){
+    fun update(vibrator: Vibrator?){
         player.update()
         //enemyObject.update()
 
@@ -93,6 +97,9 @@ class Game(context: Context, screenWith: Int, screenHeight: Int) : SurfaceView(c
             if (i.isPositionYOutOfView()) {enemyObjectIterator.remove()}
             if ((i.positionY+100 > playerYPosition-350 && i.positionY+100<playerYPosition) && (i.positionX > playerXPosition-250 && i.positionX < playerXPosition+120)){
                 enemyObjectIterator.remove()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
+                }
             }
         }
     }
@@ -112,7 +119,7 @@ class Game(context: Context, screenWith: Int, screenHeight: Int) : SurfaceView(c
     }
 
     fun generateARandomXPosition(): Int{  /** display.width has to be changed but it work for now **/
-        var randomXPositionEnemy = (60..display.width-60).random()
+        var randomXPositionEnemy = (60..display.width-100).random()
         return randomXPositionEnemy
     }
 
