@@ -14,20 +14,26 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.example.gameloop.R
 
-class Game(context: Context, screenWith: Int, screenHeight: Int, vibrator: Vibrator?) : SurfaceView(context), SurfaceHolder.Callback{
+class Game(context: Context, private var screenWith: Int, screenHeight: Int, vibrator: Vibrator?) : SurfaceView(context), SurfaceHolder.Callback{
+
+    private val playerInitialLives = 3
+    var playerLives = playerInitialLives
 
     private var paint: Paint = Paint()
     private var surfaceView = holder
-    private var gameLoop = GameLoop(this, surfaceView,vibrator)
-    private var player = Player(context)
-    private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small))
-    private var listOfEnemyObject = mutableListOf<EnemyObject>()
-    //private var itemsToRemove = mutableListOf<EnemyObject>()
-    val metrics = DisplayMetrics()
+    private var gameLoop = GameLoop(this, surfaceView,vibrator,playerLives)
 
-    var playerXPosition = screenWith/2  //580
-    var playerYPosition = screenHeight*4/5  //1800
+    private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
+    private var listOfEnemyObject = mutableListOf<EnemyObject>()
     private val OBJECT_VELOCITY = 20
+
+    private var player = Player(context)
+    var playerXPosition = screenWith / 2
+    var playerYPosition = screenHeight* 4/5
+
+
+    private var life = Life(context, playerLives)
+
 
     init {
         paint.isFilterBitmap = true
@@ -56,8 +62,7 @@ class Game(context: Context, screenWith: Int, screenHeight: Int, vibrator: Vibra
         drawFPS(canvas)
 
         player.draw(canvas, playerXPosition, playerYPosition)
-
-        //enemyObject.draw(canvas)
+        life.draw(canvas,screenWith, 50, playerLives, context)
 
         for (item in listOfEnemyObject){
             item.positionY = item.positionY + OBJECT_VELOCITY
@@ -83,10 +88,10 @@ class Game(context: Context, screenWith: Int, screenHeight: Int, vibrator: Vibra
 
     fun update(vibrator: Vibrator?){
         player.update()
-        //enemyObject.update()
+        life.update()
 
         if(enemyObject.readyToSpawn()){
-            var newEnemy = EnemyObject(context,generateARandomXPosition(),0,generateImageRandomly())
+            var newEnemy = EnemyObject(context,generateARandomXPosition(),0,player.generateImageRandomly(context))
             listOfEnemyObject.add(newEnemy)
         }
         for (item in listOfEnemyObject) {
@@ -97,6 +102,7 @@ class Game(context: Context, screenWith: Int, screenHeight: Int, vibrator: Vibra
             if (i.isPositionYOutOfView()) {enemyObjectIterator.remove()}
             if ((i.positionY+100 > playerYPosition-350 && i.positionY+100<playerYPosition) && (i.positionX > playerXPosition-250 && i.positionX < playerXPosition+120)){
                 enemyObjectIterator.remove()
+                playerLives--
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
                 }
@@ -104,25 +110,14 @@ class Game(context: Context, screenWith: Int, screenHeight: Int, vibrator: Vibra
         }
     }
 
-    fun generateImageRandomly(): Bitmap{
-        var random = (1..5).random()
-        var bitmap: Bitmap
-        when(random){
-            1 -> bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)
-            2 -> bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.candy_emoji_small)
-            3 -> bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.cholate_emoji_small)
-            4 -> bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.cookie_emoji_small)
-            5 -> bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.lollipop_emoji_small)
-            else -> bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)
-        }
-        return bitmap
-    }
+
 
     fun generateARandomXPosition(): Int{  /** display.width has to be changed but it work for now **/
         var randomXPositionEnemy = (60..display.width-100).random()
         return randomXPositionEnemy
     }
 
+    /** implemented methods from SurfaceVIew */
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
         gameLoop.startLoop()
     }

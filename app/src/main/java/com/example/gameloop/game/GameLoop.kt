@@ -11,7 +11,7 @@ import java.lang.IllegalArgumentException
 import java.util.*
 import kotlin.concurrent.schedule
 
-class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder, private val vibrator: Vibrator?): Thread() {
+class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder, private val vibrator: Vibrator?,private var playerLives: Int): Thread() {
 
     private var isRunning = false
     private lateinit var canvas: Canvas
@@ -33,6 +33,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
     }
 
     fun startLoop(){
+        //TODO Check playerLives for stopping and restarting the game
         isRunning = true
         start()
     }
