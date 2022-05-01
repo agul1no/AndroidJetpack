@@ -25,7 +25,7 @@ class Game(context: Context, private var screenWith: Int, screenHeight: Int, vib
 
     private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
-    private val OBJECT_VELOCITY = 20
+    private val OBJECT_VELOCITY = 28
 
     private var player = Player(context)
     var playerXPosition = screenWith / 2

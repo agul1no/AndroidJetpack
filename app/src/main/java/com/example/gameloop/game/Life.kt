@@ -21,7 +21,7 @@ class Life(context: Context, private var playerLives: Int) {
         if (playerLives == 1){
             oneLife(canvas, context, lifeX, lifeY)
         }
-        if (playerLives == 0){
+        if (playerLives <= 0){
             zeroLives(canvas, context, lifeX, lifeY)
         }
 
@@ -32,27 +32,27 @@ class Life(context: Context, private var playerLives: Int) {
     }
 
     fun threeLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-50,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-150,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-250,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
     fun twoLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-50,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-150,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-250,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
     fun oneLife(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-50,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-150,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-250,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
     fun zeroLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-50,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-150,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-250,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
     fun generateImageHealthyHeart(context: Context): Bitmap{
