@@ -16,16 +16,17 @@ import com.example.gameloop.R
 
 class Game(context: Context, private var screenWith: Int, screenHeight: Int, vibrator: Vibrator?) : SurfaceView(context), SurfaceHolder.Callback{
 
-    private val playerInitialLives = 3
-    var playerLives = playerInitialLives
+    private val PLAYER_INITIAL_LIVES = 3
+    var playerLives = PLAYER_INITIAL_LIVES
+
+    private val OBJECT_INITIAL_VELOCITY = 24
+    var enemyObjectVelocity = OBJECT_INITIAL_VELOCITY
+    private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
+    private var listOfEnemyObject = mutableListOf<EnemyObject>()
 
     private var paint: Paint = Paint()
     private var surfaceView = holder
-    private var gameLoop = GameLoop(this, surfaceView,vibrator,playerLives)
-
-    private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
-    private var listOfEnemyObject = mutableListOf<EnemyObject>()
-    private val OBJECT_VELOCITY = 28
+    private var gameLoop = GameLoop(this, surfaceView,vibrator,playerLives, enemyObject)
 
     private var player = Player(context)
     var playerXPosition = screenWith / 2
@@ -65,7 +66,7 @@ class Game(context: Context, private var screenWith: Int, screenHeight: Int, vib
         life.draw(canvas,screenWith, 50, playerLives, context)
 
         for (item in listOfEnemyObject){
-            item.positionY = item.positionY + OBJECT_VELOCITY
+            item.positionY = item.positionY + enemyObjectVelocity
             item.draw(canvas,item.positionX,item.positionY,item.image,paint)
         }
     }
