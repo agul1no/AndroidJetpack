@@ -5,7 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 
-class EnemyObject(context: Context, val positionX: Int, var positionY: Int, val image: Bitmap) {
+class EnemyObject(val positionX: Int, var positionY: Int, val image: Bitmap) {
 
     private val INITAL_SPAWN_PER_MINUTES = 100
     var spawnPerMinute = INITAL_SPAWN_PER_MINUTES

@@ -2,9 +2,7 @@ package com.example.gameloop.game
 
 import android.content.Context
 import android.graphics.*
-import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.os.*
 import android.util.DisplayMetrics
 import java.util.function.Predicate
 import android.view.MotionEvent
@@ -12,16 +10,18 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
 
-class Game(context: Context, private var screenWith: Int, screenHeight: Int, vibrator: Vibrator?) : SurfaceView(context), SurfaceHolder.Callback{
+class Game(context: Context, private var screenWith: Int, private var screenHeight: Int, vibrator: Vibrator?) : SurfaceView(context), SurfaceHolder.Callback{
 
     private val PLAYER_INITIAL_LIVES = 3
     var playerLives = PLAYER_INITIAL_LIVES
 
     private val OBJECT_INITIAL_VELOCITY = 24
     var enemyObjectVelocity = OBJECT_INITIAL_VELOCITY
-    private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
+    private var enemyObject = EnemyObject(-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
 
     private var paint: Paint = Paint()
@@ -32,8 +32,9 @@ class Game(context: Context, private var screenWith: Int, screenHeight: Int, vib
     var playerXPosition = screenWith / 2
     var playerYPosition = screenHeight* 4/5
 
-
     private var life = Life(context, playerLives)
+
+    private var score = Score(100,100)
 
 
     init {
@@ -64,6 +65,7 @@ class Game(context: Context, private var screenWith: Int, screenHeight: Int, vib
 
         player.draw(canvas, playerXPosition, playerYPosition)
         life.draw(canvas,screenWith, 50, playerLives, context)
+        score.draw(canvas,100, 120)
 
         for (item in listOfEnemyObject){
             item.positionY = item.positionY + enemyObjectVelocity
@@ -90,14 +92,18 @@ class Game(context: Context, private var screenWith: Int, screenHeight: Int, vib
     fun update(vibrator: Vibrator?){
         player.update()
         life.update()
+        score.update()
 
+        /** creates an enemy object in a random position along the screen and updates its position */
         if(enemyObject.readyToSpawn()){
-            var newEnemy = EnemyObject(context,generateARandomXPosition(),0,player.generateImageRandomly(context))
+            var newEnemy = EnemyObject(generateARandomXPosition(),0,player.generateImageRandomly(context))
             listOfEnemyObject.add(newEnemy)
         }
         for (item in listOfEnemyObject) {
             enemyObject.update()
         }
+
+        /** checks if the player touches an enemy object, delete the object, update the lives and vibrates */
         var enemyObjectIterator = listOfEnemyObject.iterator()
         for (i in enemyObjectIterator){
             if (i.isPositionYOutOfView()) {enemyObjectIterator.remove()}
@@ -108,6 +114,13 @@ class Game(context: Context, private var screenWith: Int, screenHeight: Int, vib
                     vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
                 }
             }
+        }
+
+        if(playerLives <= 0){
+            gameLoop.stopLoop()
+            Handler(Looper.getMainLooper()).postDelayed({
+                findNavController().navigate(R.id.action_gameFragment_to_mainFragment)
+            }, 2000)
         }
     }
 

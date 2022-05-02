@@ -17,6 +17,8 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
 
     private val UPS_PERIOD = 1E+3/MAX_UPS
 
+    private val score = Score(0,0)
+
     companion object{
         const val MAX_UPS = 60.0
     }
@@ -30,9 +32,12 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
     }
 
     fun startLoop(){
-        //TODO Check playerLives for stopping and restarting the game
         isRunning = true
         start()
+    }
+
+    fun stopLoop(){
+        isRunning = false
     }
 
     override fun run() {
@@ -114,6 +119,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
         }
     }
 
+    /** Increments the level of difficulty while the game is running */
     private fun checkRunningTime(runningTime: Long){
         if (runningTime in 5001..9999){
             game.enemyObjectVelocity = 30

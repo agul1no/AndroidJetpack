@@ -10,6 +10,7 @@ import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
 import com.example.gameloop.databinding.FragmentMainBinding
+import com.example.gameloop.game.Score
 
 
 class MainFragment : Fragment() {
@@ -17,11 +18,15 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
+    private val score = Score(0,0)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater,container,false)
+
+        binding.tvLastScore.text = "Your last Score war: ${score.scoreCounter}"
 
         binding.tvStart.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_gameFragment)

@@ -1,6 +1,8 @@
 package com.example.gameloop.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.Vibrator
 import android.util.DisplayMetrics
 import android.util.Log
@@ -9,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.getSystemService
+import androidx.navigation.fragment.findNavController
+import com.example.gameloop.R
 import com.example.gameloop.game.Game
 import java.util.*
 import kotlin.concurrent.schedule
