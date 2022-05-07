@@ -34,8 +34,8 @@ class GameFragment : Fragment(){//R.layout.fragment_game) {
         val screenWidth = metrics.widthPixels
         val screenHeight = metrics.heightPixels
         var vibrator = activity?.getSystemService<Vibrator>()
-        game = Game(requireContext(), screenWidth, screenHeight, vibrator)
 
+        game = Game(requireContext(), screenWidth, screenHeight, vibrator)
 
         return game
     }

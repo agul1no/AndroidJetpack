@@ -33,6 +33,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
 
     fun startLoop(){
         isRunning = true
+        Score.scoreCounter = 0.0
         start()
     }
 
@@ -121,21 +122,53 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
 
     /** Increments the level of difficulty while the game is running */
     private fun checkRunningTime(runningTime: Long){
-        if (runningTime in 5001..9999){
+        if (runningTime in 3000..5999){
+            game.enemyObjectVelocity = 26
+            enemyObject.updatesPerSpawn = 34.0
+        }
+        if (runningTime in 6000..9999){
+            game.enemyObjectVelocity = 28
+            enemyObject.updatesPerSpawn = 32.0
+        }
+        if (runningTime in 10000..15999){
             game.enemyObjectVelocity = 30
             enemyObject.updatesPerSpawn = 30.0
         }
-        if (runningTime in 10000..19999){
+        if(runningTime in 16000..21999){
+            game.enemyObjectVelocity = 32
+            enemyObject.updatesPerSpawn = 28.0
+        }
+        if(runningTime in 22000..29999){
+            game.enemyObjectVelocity = 34
+            enemyObject.updatesPerSpawn = 26.0
+        }
+        if(runningTime in 30000..33999){
+            game.enemyObjectVelocity = 36
+            enemyObject.updatesPerSpawn = 24.0
+        }
+        if(runningTime in 34000..37999){
+            game.enemyObjectVelocity = 38
+            enemyObject.updatesPerSpawn = 22.0
+        }
+        if(runningTime in 38000..41999){
             game.enemyObjectVelocity = 40
-            enemyObject.updatesPerSpawn = 25.0
+            enemyObject.updatesPerSpawn = 22.0
         }
-        if (runningTime in 20000..29999){
-            game.enemyObjectVelocity = 45
-            enemyObject.updatesPerSpawn = 20.0
+        if(runningTime in 42000..45999){
+            game.enemyObjectVelocity = 42
+            enemyObject.updatesPerSpawn = 22.0
         }
-        if(runningTime > 30000){
-            game.enemyObjectVelocity = 52
-            enemyObject.updatesPerSpawn = 15.0
+        if(runningTime in 46000..59999){
+            game.enemyObjectVelocity = 44
+            enemyObject.updatesPerSpawn = 22.0
+        }
+        if(runningTime in 60000..69999){
+            game.enemyObjectVelocity = 46
+            enemyObject.updatesPerSpawn = 22.0
+        }
+        if(runningTime in 70000..79999){
+            game.enemyObjectVelocity = 48
+            enemyObject.updatesPerSpawn = 22.0
         }
     }
 }

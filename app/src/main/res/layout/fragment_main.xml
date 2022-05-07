@@ -7,16 +7,28 @@
     android:background="@drawable/gradient_bg_splash"
     tools:context=".fragments.MainFragment">
 
+    <TextView
+        android:id="@+id/tvWelcomeMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome Agu"
+        android:textColor="@color/white"
+        android:textSize="26dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivSplash"
+        app:layout_constraintStart_toStartOf="@+id/ivSplash"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/ivSplash"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="150dp"
         android:src="@mipmap/jetpack_logo"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvWelcomeMessage" />
 
     <TextView
         android:id="@+id/tvStart"
@@ -32,15 +44,18 @@
         app:layout_constraintTop_toBottomOf="@+id/ivSplash" />
 
     <TextView
-        android:id="@+id/tvLastScore"
+        android:id="@+id/tvScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="your last score was: 0"
-        android:textColor="@color/white"
-        android:textSize="24dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/ivSplash"
-        app:layout_constraintEnd_toEndOf="@+id/ivSplash"
-        app:layout_constraintStart_toStartOf="@+id/ivSplash" />
+        android:text="SCORE"
+        android:textColor="@color/black"
+        android:textSize="52sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStart" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

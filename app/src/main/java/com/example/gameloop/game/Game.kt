@@ -10,7 +10,9 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
 
@@ -43,6 +45,10 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         paint.color = Color.RED
 
         surfaceView.addCallback(this)
+
+//        val fragmentActivity = FragmentActivity()
+//        val navHostFragment = fragmentActivity.supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+//        val navController = navHostFragment.navController
     }
 
 
@@ -119,7 +125,7 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         if(playerLives <= 0){
             gameLoop.stopLoop()
             Handler(Looper.getMainLooper()).postDelayed({
-                findNavController().navigate(R.id.action_gameFragment_to_mainFragment)
+                findNavController().navigate(R.id.action_gameFragment_to_afterGameFragment)
             }, 2000)
         }
     }

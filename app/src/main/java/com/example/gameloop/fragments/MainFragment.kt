@@ -18,18 +18,18 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private val score = Score(0,0)
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater,container,false)
 
-        binding.tvLastScore.text = "Your last Score war: ${score.scoreCounter}"
-
         binding.tvStart.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_gameFragment)
+        }
+
+        binding.tvScore.setOnClickListener {
+            findNavController().navigate(R.id.action_mainFragment_to_scoreFragment)
         }
 
         return binding.root

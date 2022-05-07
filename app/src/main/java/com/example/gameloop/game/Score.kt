@@ -9,11 +9,14 @@ import kotlin.math.roundToLong
 class Score(private var positionX: Int, private var positionY: Int) {
 
     var paint: Paint = Paint()
-    var scoreCounter = 0.0
 
     init {
         paint.color = Color.WHITE
         paint.textSize = 100f
+    }
+
+    companion object{
+        var scoreCounter = 0.0
     }
 
     fun draw(canvas: Canvas, positionX: Int, positionY: Int){
@@ -21,7 +24,7 @@ class Score(private var positionX: Int, private var positionY: Int) {
     }
 
     fun update(){
-        scoreCounter += 0.05
+        scoreCounter += 0.04
     }
 
 }
