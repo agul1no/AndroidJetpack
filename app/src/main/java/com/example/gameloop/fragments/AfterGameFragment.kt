@@ -29,10 +29,10 @@ class AfterGameFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentAfterGameBinding.inflate(inflater,container,false)
 
-        binding.tvScorePlayed.text = "Score: ${Score.scoreCounter.roundToLong()}"
+        binding.tvScorePlayed.text = "Score:  ${Score.scoreCounter.roundToLong()} points"
 
         val playedTime = GameLoop.runningTime.formatTimeToString()
-        binding.tvTimePlayed.text = "Time Played: ${playedTime}"
+        binding.tvTimePlayed.text = "Time played:  ${playedTime} min"
 
         binding.backButtonAfterGame.setOnClickListener {
             findNavController().navigate(R.id.action_afterGameFragment_to_mainFragment)
