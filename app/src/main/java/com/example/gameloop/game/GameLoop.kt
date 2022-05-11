@@ -3,7 +3,6 @@ package com.example.gameloop.game
 import android.graphics.Canvas
 import android.os.Build
 import android.os.Vibrator
-import android.util.Log
 import android.view.SurfaceHolder
 import java.lang.Exception
 import java.lang.IllegalArgumentException
@@ -17,10 +16,9 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
 
     private val UPS_PERIOD = 1E+3/MAX_UPS
 
-    private val score = Score(0,0)
-
     companion object{
         const val MAX_UPS = 60.0
+        var runningTime: Long = 0
     }
 
     fun getAverageUPS(): Double{
@@ -34,6 +32,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
     fun startLoop(){
         isRunning = true
         Score.scoreCounter = 0.0
+        runningTime = 0
         start()
     }
 
@@ -50,11 +49,11 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
         var startTime: Long
         var elapsedTime: Long
         var sleepTime: Long
-        var runningTime: Long = 0
 
         // Game Loop
         startTime = System.currentTimeMillis()
         while (isRunning){
+
             var startLoop = System.currentTimeMillis()
 
             checkRunningTime(runningTime)
@@ -111,6 +110,11 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
                 frameCount = 0
                 startTime = System.currentTimeMillis()
             }
+
+            // wait 2 sec at the beginning
+            if(runningTime <= 0){
+                sleep(2000)
+            }
             runningTime = runningTime + (System.currentTimeMillis() - startLoop)
 
 //            Log.d("Spawns per Minute", enemyObject.spawnPerMinute.toString())
@@ -122,7 +126,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
 
     /** Increments the level of difficulty while the game is running */
     private fun checkRunningTime(runningTime: Long){
-        if (runningTime in 3000..5999){
+        if (runningTime in 3000..5999){ // +1 CYC
             game.enemyObjectVelocity = 26
             enemyObject.updatesPerSpawn = 34.0
         }
@@ -132,15 +136,15 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
         }
         if (runningTime in 10000..15999){
             game.enemyObjectVelocity = 30
-            enemyObject.updatesPerSpawn = 30.0
+            enemyObject.updatesPerSpawn = 32.0
         }
         if(runningTime in 16000..21999){
             game.enemyObjectVelocity = 32
-            enemyObject.updatesPerSpawn = 28.0
+            enemyObject.updatesPerSpawn = 30.0
         }
         if(runningTime in 22000..29999){
             game.enemyObjectVelocity = 34
-            enemyObject.updatesPerSpawn = 26.0
+            enemyObject.updatesPerSpawn = 28.0
         }
         if(runningTime in 30000..33999){
             game.enemyObjectVelocity = 36

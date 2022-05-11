@@ -35,22 +35,15 @@ class GameFragment : Fragment(){//R.layout.fragment_game) {
         val screenHeight = metrics.heightPixels
         var vibrator = activity?.getSystemService<Vibrator>()
 
-        game = Game(requireContext(), screenWidth, screenHeight, vibrator)
+        game = Game(requireContext(), screenWidth, screenHeight, vibrator,this)
 
         return game
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //game = Game(requireContext())
-        //_binding = FragmentGameBinding.bind(game)
-        //_binding = binding
-
-    }
-
-    override fun onDestroyView() {
-        //_binding = null
-        super.onDestroyView()
+    fun moveToTheAfterGameFragment(){
+        Handler(Looper.getMainLooper()).postDelayed({
+            findNavController().navigate(R.id.action_gameFragment_to_afterGameFragment)
+                                                    }, 2000)
     }
 
 }

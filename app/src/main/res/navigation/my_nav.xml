@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/afterGameFragment"
-        android:name="com.example.gameloop.game.AfterGameFragment"
+        android:name="com.example.gameloop.fragments.AfterGameFragment"
         android:label="fragment_after_game"
         tools:layout="@layout/fragment_after_game" >
         <action
@@ -56,7 +56,7 @@
     </fragment>
     <fragment
         android:id="@+id/scoreFragment"
-        android:name="com.example.gameloop.game.ScoreFragment"
+        android:name="com.example.gameloop.fragments.ScoreFragment"
         android:label="fragment_score"
         tools:layout="@layout/fragment_score" >
         <action

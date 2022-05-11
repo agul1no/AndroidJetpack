@@ -11,12 +11,14 @@ import android.view.SurfaceView
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.findFragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
+import com.example.gameloop.fragments.GameFragment
 
-class Game(context: Context, private var screenWith: Int, private var screenHeight: Int, vibrator: Vibrator?) : SurfaceView(context), SurfaceHolder.Callback{
+class Game(context: Context, private var screenWith: Int, private var screenHeight: Int, vibrator: Vibrator?, private var fragment: GameFragment) : SurfaceView(context), SurfaceHolder.Callback{
 
     private val PLAYER_INITIAL_LIVES = 3
     var playerLives = PLAYER_INITIAL_LIVES
@@ -38,6 +40,9 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
 
     private var score = Score(100,100)
 
+//    val fragmentActivity = FragmentActivity()
+//    val navHostFragment = fragmentActivity.supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+//    val navController = navHostFragment.navController
 
     init {
         paint.isFilterBitmap = true
@@ -45,10 +50,6 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         paint.color = Color.RED
 
         surfaceView.addCallback(this)
-
-//        val fragmentActivity = FragmentActivity()
-//        val navHostFragment = fragmentActivity.supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-//        val navController = navHostFragment.navController
     }
 
 
@@ -124,9 +125,7 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
 
         if(playerLives <= 0){
             gameLoop.stopLoop()
-            Handler(Looper.getMainLooper()).postDelayed({
-                findNavController().navigate(R.id.action_gameFragment_to_afterGameFragment)
-            }, 2000)
+            fragment.moveToTheAfterGameFragment()
         }
     }
 
