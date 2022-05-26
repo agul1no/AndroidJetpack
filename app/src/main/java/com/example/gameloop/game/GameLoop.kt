@@ -36,6 +36,10 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
         start()
     }
 
+    fun resumeLoop(){
+        isRunning = true
+    }
+
     fun stopLoop(){
         isRunning = false
     }
@@ -56,7 +60,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
 
             var startLoop = System.currentTimeMillis()
 
-            checkRunningTime(runningTime)
+            incrementEnemyVelocityWhileGameIsRunning(runningTime)
 
             // update and render game
         try {
@@ -91,15 +95,15 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
                     e.printStackTrace()
                 }
             }
-            // Skip frames to keep up with the target UPS
-            while (sleepTime < 0 && updateCount < MAX_UPS -1){
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    game.update(vibrator)
-                }
-                updateCount++
-                elapsedTime = System.currentTimeMillis() - startTime
-                sleepTime = (updateCount*UPS_PERIOD - elapsedTime).toLong()
-            }
+//            // Skip frames to keep up with the target UPS
+//            while (sleepTime < 0 && updateCount < MAX_UPS -1){
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    game.update(vibrator)
+//                }
+//                updateCount++
+//                elapsedTime = System.currentTimeMillis() - startTime
+//                sleepTime = (updateCount*UPS_PERIOD - elapsedTime).toLong()
+//            }
             // Calculate average UPS and FPS
             elapsedTime = System.currentTimeMillis() - startTime
             if (elapsedTime >= 1000){
@@ -113,7 +117,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
 
             // wait 2 sec at the beginning
             if(runningTime <= 0){
-                sleep(2000)
+                sleep(1000)
             }
             runningTime = runningTime + (System.currentTimeMillis() - startLoop)
 
@@ -125,54 +129,53 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
     }
 
     /** Increments the level of difficulty while the game is running */
-    private fun checkRunningTime(runningTime: Long){
+    private fun incrementEnemyVelocityWhileGameIsRunning(runningTime: Long){
         if (runningTime in 3000..5999){ // +1 CYC
-            game.enemyObjectVelocity = 26
-            enemyObject.updatesPerSpawn = 34.0
+            game.enemyObjectVelocity = 18
         }
         if (runningTime in 6000..9999){
-            game.enemyObjectVelocity = 28
-            enemyObject.updatesPerSpawn = 32.0
+            game.enemyObjectVelocity = 20
+            enemyObject.updatesPerSpawn = 46.0
         }
         if (runningTime in 10000..15999){
-            game.enemyObjectVelocity = 30
-            enemyObject.updatesPerSpawn = 32.0
+            game.enemyObjectVelocity = 22
+            enemyObject.updatesPerSpawn = 44.0
         }
         if(runningTime in 16000..21999){
-            game.enemyObjectVelocity = 32
-            enemyObject.updatesPerSpawn = 30.0
+            game.enemyObjectVelocity = 24
+            enemyObject.updatesPerSpawn = 42.0
         }
         if(runningTime in 22000..29999){
-            game.enemyObjectVelocity = 34
-            enemyObject.updatesPerSpawn = 28.0
+            game.enemyObjectVelocity = 26
+            enemyObject.updatesPerSpawn = 40.0
         }
         if(runningTime in 30000..33999){
-            game.enemyObjectVelocity = 36
-            enemyObject.updatesPerSpawn = 24.0
+            game.enemyObjectVelocity = 28
+            enemyObject.updatesPerSpawn = 38.0
         }
         if(runningTime in 34000..37999){
-            game.enemyObjectVelocity = 38
-            enemyObject.updatesPerSpawn = 22.0
+            game.enemyObjectVelocity = 30
+            enemyObject.updatesPerSpawn = 36.0
         }
         if(runningTime in 38000..41999){
-            game.enemyObjectVelocity = 40
-            enemyObject.updatesPerSpawn = 22.0
+            game.enemyObjectVelocity = 32
+            enemyObject.updatesPerSpawn = 34.0
         }
         if(runningTime in 42000..45999){
-            game.enemyObjectVelocity = 42
-            enemyObject.updatesPerSpawn = 22.0
+            game.enemyObjectVelocity = 34
+            enemyObject.updatesPerSpawn = 32.0
         }
         if(runningTime in 46000..59999){
-            game.enemyObjectVelocity = 44
-            enemyObject.updatesPerSpawn = 22.0
+            game.enemyObjectVelocity = 36
+            enemyObject.updatesPerSpawn = 30.0
         }
         if(runningTime in 60000..69999){
-            game.enemyObjectVelocity = 46
-            enemyObject.updatesPerSpawn = 22.0
+            game.enemyObjectVelocity = 38
+            enemyObject.updatesPerSpawn = 28.0
         }
         if(runningTime in 70000..79999){
-            game.enemyObjectVelocity = 48
-            enemyObject.updatesPerSpawn = 22.0
+            game.enemyObjectVelocity = 40
+            enemyObject.updatesPerSpawn = 26.0
         }
     }
 }

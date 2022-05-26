@@ -43,7 +43,17 @@ class GameFragment : Fragment(){//R.layout.fragment_game) {
     fun moveToTheAfterGameFragment(){
         Handler(Looper.getMainLooper()).postDelayed({
             findNavController().navigate(R.id.action_gameFragment_to_afterGameFragment)
-                                                    }, 2000)
+                                                    }, 1600)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        game.resumeGame()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        game.pauseGame()
     }
 
 }

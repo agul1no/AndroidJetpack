@@ -7,7 +7,7 @@ import android.graphics.Paint
 
 class EnemyObject(val positionX: Int, var positionY: Int, val image: Bitmap) {
 
-    private val INITAL_SPAWN_PER_MINUTES = 100
+    private val INITAL_SPAWN_PER_MINUTES = 70
     var spawnPerMinute = INITAL_SPAWN_PER_MINUTES
     var spawnPerSeconds:Double = spawnPerMinute/60.0
     var updatesPerSpawn: Double = GameLoop.MAX_UPS/spawnPerSeconds

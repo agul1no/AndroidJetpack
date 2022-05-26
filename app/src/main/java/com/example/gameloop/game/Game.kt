@@ -23,7 +23,7 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
     private val PLAYER_INITIAL_LIVES = 3
     var playerLives = PLAYER_INITIAL_LIVES
 
-    private val OBJECT_INITIAL_VELOCITY = 24
+    private val OBJECT_INITIAL_VELOCITY = 16
     var enemyObjectVelocity = OBJECT_INITIAL_VELOCITY
     private var enemyObject = EnemyObject(-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
@@ -80,22 +80,6 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         }
     }
 
-    fun drawUPS(canvas: Canvas?){
-        var averageUPS = gameLoop.getAverageUPS().toString()
-        val color = ContextCompat.getColor(context, R.color.red)
-        paint.color = color
-        paint.textSize = 50f
-        canvas?.drawText("UPS: $averageUPS",100f,250f, paint)
-    }
-
-    fun drawFPS(canvas: Canvas?){
-        var averageFPS = gameLoop.getAverageFPS().toString()
-        val color = ContextCompat.getColor(context, R.color.red)
-        paint.color = color
-        paint.textSize = 50f
-        canvas?.drawText("FPS: $averageFPS",100f,350f, paint)
-    }
-
     fun update(vibrator: Vibrator?){
         player.update()
         life.update()
@@ -124,12 +108,19 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         }
 
         if(playerLives <= 0){
-            gameLoop.stopLoop()
+            pauseGame()
             fragment.moveToTheAfterGameFragment()
+            return
         }
     }
 
+    fun pauseGame(){
+        gameLoop.stopLoop()
+    }
 
+    fun resumeGame(){
+        gameLoop.resumeLoop()
+    }
 
     fun generateARandomXPosition(): Int{  /** display.width has to be changed but it work for now **/
         var randomXPositionEnemy = (60..display.width-100).random()
@@ -142,9 +133,27 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
     }
 
     override fun surfaceChanged(surfaceHolder: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
+        // left empty cause don't needed
     }
 
     override fun surfaceDestroyed(surfaceHolder: SurfaceHolder) {
+        // left empty cause don't needed
+    }
+
+    fun drawUPS(canvas: Canvas?){
+        var averageUPS = gameLoop.getAverageUPS().toString()
+        val color = ContextCompat.getColor(context, R.color.red)
+        paint.color = color
+        paint.textSize = 50f
+        canvas?.drawText("UPS: $averageUPS",100f,250f, paint)
+    }
+
+    fun drawFPS(canvas: Canvas?){
+        var averageFPS = gameLoop.getAverageFPS().toString()
+        val color = ContextCompat.getColor(context, R.color.red)
+        paint.color = color
+        paint.textSize = 50f
+        canvas?.drawText("FPS: $averageFPS",100f,350f, paint)
     }
 
 }

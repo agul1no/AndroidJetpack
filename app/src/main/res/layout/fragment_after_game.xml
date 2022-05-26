@@ -7,17 +7,26 @@
     android:background="@drawable/gradient_bg_splash"
     tools:context=".fragments.AfterGameFragment">
 
+    <ImageView
+        android:id="@+id/androidBroken"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@mipmap/android_broken"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvScorePlayed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="80dp"
         android:text="Score:"
         android:textColor="@color/black"
         android:textSize="28sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/androidBroken" />
 
     <TextView
         android:id="@+id/tvTimePlayed"
@@ -36,15 +45,15 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="70dp"
+        android:layout_marginBottom="100dp"
         android:text="Back to main menu"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        app:strokeColor="@color/white"
         android:textSize="24sp"
-        android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
