@@ -31,36 +31,36 @@ class Life(context: Context, private var playerLives: Int) {
 
     }
 
-    fun threeLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
+    private fun threeLives(canvas: Canvas, context: Context, lifeX: Int, lifeY: Int){
         canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
-    fun twoLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
+    private fun twoLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
         canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
-    fun oneLife(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
+    private fun oneLife(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
         canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
-    fun zeroLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
+    private fun zeroLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
         canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
-    fun generateImageHealthyHeart(context: Context): Bitmap{
+    private fun generateImageHealthyHeart(context: Context): Bitmap{
         var bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.heart_emoji_small)
         return bitmap
     }
 
-    fun generateImageBrokenHeart(context: Context): Bitmap{
+    private fun generateImageBrokenHeart(context: Context): Bitmap{
         var bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.broken_heart_emoji_small)
         return bitmap
     }

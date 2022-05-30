@@ -115,7 +115,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
                 startTime = System.currentTimeMillis()
             }
 
-            // wait 2 sec at the beginning
+            // wait 1 sec at the beginning
             if(runningTime <= 0){
                 sleep(1000)
             }

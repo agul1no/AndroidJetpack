@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
 import com.example.gameloop.fragments.GameFragment
+import kotlin.math.abs
 
 class Game(context: Context, private var screenWith: Int, private var screenHeight: Int, vibrator: Vibrator?, private var fragment: GameFragment) : SurfaceView(context), SurfaceHolder.Callback{
 
@@ -25,7 +26,7 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
 
     private val OBJECT_INITIAL_VELOCITY = 16
     var enemyObjectVelocity = OBJECT_INITIAL_VELOCITY
-    private var enemyObject = EnemyObject(-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)) // creating an enemyObject for accessing the methods of the enemy class
+    private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small),screenHeight) // creating an enemyObject for accessing the methods of the enemy class
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
 
     private var paint: Paint = Paint()
@@ -38,11 +39,11 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
 
     private var life = Life(context, playerLives)
 
+    private var lifeObject = LifeObject(context,-200,0,LifeObject.generateImageHealthyHeart(context),screenHeight)
+    private var listOfLifeObject = mutableListOf<LifeObject>()
+
     private var score = Score(100,100)
 
-//    val fragmentActivity = FragmentActivity()
-//    val navHostFragment = fragmentActivity.supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-//    val navController = navHostFragment.navController
 
     init {
         paint.isFilterBitmap = true
@@ -56,8 +57,13 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         //return super.onTouchEvent(event)
 
-        playerXPosition = event?.x!!.toInt()
-        playerYPosition = event.y.toInt()
+        if(abs(playerXPosition-event?.x!!.toInt()) < 200 && abs(playerYPosition-event.y.toInt()) < 200){
+            playerXPosition = event.x.toInt()
+            playerYPosition = event.y.toInt()
+        }
+        if (playerXPosition < 150) playerXPosition = 150
+        if (playerXPosition > screenWith - 100) playerXPosition = screenWith - 100
+
         invalidate()
         return true
     }
@@ -65,7 +71,7 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
-        var backgroundColor = ContextCompat.getColor(context, R.color.black)
+        val backgroundColor = ContextCompat.getColor(context, R.color.black)
         canvas.drawColor(backgroundColor)
         drawUPS(canvas)
         drawFPS(canvas)
@@ -78,6 +84,11 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
             item.positionY = item.positionY + enemyObjectVelocity
             item.draw(canvas,item.positionX,item.positionY,item.image,paint)
         }
+
+        for (item in listOfLifeObject){
+            item.positionY += enemyObjectVelocity
+            item.draw(canvas,item.positionX,item.positionY,item.image,paint)
+        }
     }
 
     fun update(vibrator: Vibrator?){
@@ -87,20 +98,41 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
 
         /** creates an enemy object in a random position along the screen and updates its position */
         if(enemyObject.readyToSpawn()){
-            var newEnemy = EnemyObject(generateARandomXPosition(),0,player.generateImageRandomly(context))
+            val newEnemy = EnemyObject(context,generateARandomXPosition(),0,enemyObject.generateImageRandomly(context),screenHeight)
             listOfEnemyObject.add(newEnemy)
         }
         for (item in listOfEnemyObject) {
             enemyObject.update()
         }
+        /** creates a life object in a random position along the screen and updates its position */
+        if (lifeObject.readyToSpawn()){
+            val newLifeObject = LifeObject(context,generateARandomXPosition(),0,LifeObject.generateImageHealthyHeart(context),screenHeight)
+            listOfLifeObject.add(newLifeObject)
+        }
+        for (item in listOfLifeObject){
+            item.update()
+        }
 
         /** checks if the player touches an enemy object, delete the object, update the lives and vibrates */
-        var enemyObjectIterator = listOfEnemyObject.iterator()
+        val enemyObjectIterator = listOfEnemyObject.iterator()
         for (i in enemyObjectIterator){
             if (i.isPositionYOutOfView()) {enemyObjectIterator.remove()}
             if ((i.positionY+100 > playerYPosition-350 && i.positionY+100<playerYPosition) && (i.positionX > playerXPosition-250 && i.positionX < playerXPosition+120)){
                 enemyObjectIterator.remove()
                 playerLives--
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
+                }
+            }
+        }
+
+        /** checks if the player touches a life object, delete the object, update the lives and vibrates */
+        val lifeObjectIterator = listOfLifeObject.iterator()
+        for (item in lifeObjectIterator){
+            if (item.isPositionYOutOfView()){ lifeObjectIterator.remove() }
+            if ((item.positionY+100 > playerYPosition-350 && item.positionY+100<playerYPosition) && (item.positionX > playerXPosition-250 && item.positionX < playerXPosition+120)){
+                lifeObjectIterator.remove()
+                if(playerLives < 3){ playerLives++ }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
                 }
@@ -122,9 +154,9 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         gameLoop.resumeLoop()
     }
 
-    fun generateARandomXPosition(): Int{  /** display.width has to be changed but it work for now **/
-        var randomXPositionEnemy = (60..display.width-100).random()
-        return randomXPositionEnemy
+    private fun generateARandomXPosition(): Int{  /** display.width has to be changed but it work for now **/
+        val randomXPosition = (60..screenWith-100).random()
+        return randomXPosition
     }
 
     /** implemented methods from SurfaceVIew */
