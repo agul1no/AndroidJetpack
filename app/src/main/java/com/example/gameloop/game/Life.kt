@@ -28,7 +28,7 @@ class Life(context: Context, private var playerLives: Int) {
     }
 
     fun update(){
-
+        // left empty on purpose
     }
 
     private fun threeLives(canvas: Canvas, context: Context, lifeX: Int, lifeY: Int){
@@ -55,13 +55,11 @@ class Life(context: Context, private var playerLives: Int) {
         canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
-    private fun generateImageHealthyHeart(context: Context): Bitmap{
-        var bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.heart_emoji_small)
-        return bitmap
+    private fun generateImageHealthyHeart(context: Context): Bitmap {
+        return BitmapFactory.decodeResource(context.resources, R.mipmap.heart_emoji_small)
     }
 
-    private fun generateImageBrokenHeart(context: Context): Bitmap{
-        var bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.broken_heart_emoji_small)
-        return bitmap
+    private fun generateImageBrokenHeart(context: Context): Bitmap {
+        return BitmapFactory.decodeResource(context.resources, R.mipmap.broken_heart_emoji_small)
     }
 }

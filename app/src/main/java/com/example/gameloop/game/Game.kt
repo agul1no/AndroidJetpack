@@ -3,23 +3,15 @@ package com.example.gameloop.game
 import android.content.Context
 import android.graphics.*
 import android.os.*
-import android.util.DisplayMetrics
-import java.util.function.Predicate
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.findFragment
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
 import com.example.gameloop.fragments.GameFragment
 import kotlin.math.abs
 
-class Game(context: Context, private var screenWith: Int, private var screenHeight: Int, vibrator: Vibrator?, private var fragment: GameFragment) : SurfaceView(context), SurfaceHolder.Callback{
+class Game(context: Context, private var screenWidth: Int, private var screenHeight: Int, vibrator: Vibrator?, private var fragment: GameFragment) : SurfaceView(context), SurfaceHolder.Callback{
 
     private val PLAYER_INITIAL_LIVES = 3
     var playerLives = PLAYER_INITIAL_LIVES
@@ -34,13 +26,16 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
     private var gameLoop = GameLoop(this, surfaceView,vibrator,playerLives, enemyObject)
 
     private var player = Player(context)
-    var playerXPosition = screenWith / 2
+    var playerXPosition = screenWidth / 2
     var playerYPosition = screenHeight* 4/5
 
     private var life = Life(context, playerLives)
 
     private var lifeObject = LifeObject(context,-200,0,LifeObject.generateImageHealthyHeart(context),screenHeight)
     private var listOfLifeObject = mutableListOf<LifeObject>()
+
+    private var pointObject = PointObject(context,"ten",-200,0,LifeObject.generateImageHealthyHeart(context), screenHeight, screenWidth)
+    private var listOfPointObjects = mutableListOf<PointObject>()
 
     private var score = Score(100,100)
 
@@ -62,7 +57,7 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
             playerYPosition = event.y.toInt()
         }
         if (playerXPosition < 150) playerXPosition = 150
-        if (playerXPosition > screenWith - 100) playerXPosition = screenWith - 100
+        if (playerXPosition > screenWidth - 100) playerXPosition = screenWidth - 100
 
         invalidate()
         return true
@@ -77,7 +72,7 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         drawFPS(canvas)
 
         player.draw(canvas, playerXPosition, playerYPosition)
-        life.draw(canvas,screenWith, 50, playerLives, context)
+        life.draw(canvas,screenWidth, 50, playerLives, context)
         score.draw(canvas,100, 120)
 
         for (item in listOfEnemyObject){
@@ -88,6 +83,11 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         for (item in listOfLifeObject){
             item.positionY += enemyObjectVelocity
             item.draw(canvas,item.positionX,item.positionY,item.image,paint)
+        }
+
+        for (item in listOfPointObjects){
+            item.positionY += enemyObjectVelocity
+            item.draw(canvas,item.positionX, item.positionY,item.image,paint)
         }
     }
 
@@ -111,6 +111,14 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         }
         for (item in listOfLifeObject){
             item.update()
+        }
+        /** creates a point object in a random position along the screen and updates its position */
+        if (pointObject.readyToSpawn()){
+            val newPointObject = pointObject.generatePointObjectRandomly()
+            listOfPointObjects.add(newPointObject)
+        }
+        for (item in listOfPointObjects){
+            pointObject.update()
         }
 
         /** checks if the player touches an enemy object, delete the object, update the lives and vibrates */
@@ -138,6 +146,20 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
                 }
             }
         }
+        /** checks if the player touches a point object, delete the object, update the lives and vibrates */
+        val pointObjectIterator = listOfPointObjects.iterator()
+        for (item in pointObjectIterator){
+            if (item.isPositionYOutOfView()){ pointObjectIterator.remove() }
+            if ((item.positionY+100 > playerYPosition-350 && item.positionY+100<playerYPosition) && (item.positionX > playerXPosition-250 && item.positionX < playerXPosition+120)){
+                pointObjectIterator.remove()
+                if(item.name == "ten"){ Score.scoreCounter += 10 }
+                if(item.name == "twenty"){ Score.scoreCounter += 20 }
+                if(item.name == "thirty"){ Score.scoreCounter += 30 }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
+                }
+            }
+        }
 
         if(playerLives <= 0){
             pauseGame()
@@ -154,9 +176,8 @@ class Game(context: Context, private var screenWith: Int, private var screenHeig
         gameLoop.resumeLoop()
     }
 
-    private fun generateARandomXPosition(): Int{  /** display.width has to be changed but it work for now **/
-        val randomXPosition = (60..screenWith-100).random()
-        return randomXPosition
+    private fun generateARandomXPosition(): Int {
+        return (70..screenWidth - 100).random()
     }
 
     /** implemented methods from SurfaceVIew */

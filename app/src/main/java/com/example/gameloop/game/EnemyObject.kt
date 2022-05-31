@@ -39,7 +39,7 @@ class EnemyObject(val context: Context, val positionX: Int, var positionY: Int, 
     }
 
     fun generateImageRandomly(context: Context): Bitmap {
-        var random = (1..5).random()
+        val random = (1..5).random()
         var bitmap: Bitmap
         when(random){
             1 -> bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small)

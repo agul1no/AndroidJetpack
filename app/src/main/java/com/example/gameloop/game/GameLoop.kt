@@ -109,7 +109,7 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
             if (elapsedTime >= 1000){
                 averageUPS = (updateCount / (elapsedTime/1000)).toDouble()
                 //Log.d("averageUPS", averageUPS.toString())
-                averageFPS = frameCount / (elapsedTime/10).toDouble()
+                averageFPS = frameCount / (elapsedTime/1000).toDouble()
                 updateCount = 0
                 frameCount = 0
                 startTime = System.currentTimeMillis()

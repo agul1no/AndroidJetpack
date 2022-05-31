@@ -40,7 +40,7 @@ class LifeObject (val context: Context, val positionX: Int, var positionY: Int, 
     companion object{
 
         fun generateImageHealthyHeart(context: Context): Bitmap{
-            val bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.heart_emoji_small)
+            val bitmap = BitmapFactory.decodeResource(context.resources, R.mipmap.heart_medium)
             return bitmap
         }
     }
