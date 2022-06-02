@@ -177,5 +177,17 @@ class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder,
             game.enemyObjectVelocity = 40
             enemyObject.updatesPerSpawn = 26.0
         }
+        if(runningTime in 80000..89999){
+            game.enemyObjectVelocity = 42
+            enemyObject.updatesPerSpawn = 24.0
+        }
+        if(runningTime in 90000..99999){
+            game.enemyObjectVelocity = 44
+            enemyObject.updatesPerSpawn = 22.0
+        }
+        if(runningTime in 100000..109999){
+            game.enemyObjectVelocity = 46
+            enemyObject.updatesPerSpawn = 20.0
+        }
     }
 }

@@ -29,7 +29,7 @@ class MainFragment : Fragment() {
         }
 
         binding.tvScore.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_scoreFragment)
+            findNavController().navigate(R.id.action_mainFragment_to_viewPagerScoreFragment)
         }
 
         return binding.root

@@ -1,4 +1,4 @@
-package com.example.gameloop.fragments
+package com.example.gameloop.viewpagerscreens
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -25,7 +25,7 @@ class ScoreFragment : Fragment() {
         binding.tvScoreTitle.paint.isUnderlineText = true
 
         binding.backButtonScoreFragment.setOnClickListener {
-            findNavController().navigate(R.id.action_scoreFragment_to_mainFragment)
+            findNavController().navigate(R.id.action_viewPagerScoreFragment_to_mainFragment)
         }
 
         return binding.root
