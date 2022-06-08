@@ -21,7 +21,7 @@ class HallOfFameFragment : Fragment() {
     ): View? {
         _binding = FragmentHallOfFameBinding.inflate(inflater, container,false)
 
-        binding.tvHallOfFameTitle.paint.isUnderlineText = true
+        //binding.tvHallOfFameTitle.paint.isUnderlineText = true
 
         binding.backButtonScoreFragment.setOnClickListener {
             findNavController().navigate(R.id.action_viewPagerScoreFragment_to_mainFragment)

@@ -41,13 +41,13 @@ class ViewPagerScoreFragment: Fragment() {
 
         binding.viewPager.adapter = adapter
 
-        binding.tabs.addTab(binding.tabs.newTab().setText("Your Score"), 0)
+        binding.tabs.addTab(binding.tabs.newTab().setText("Your Top Score"), 0)
         binding.tabs.addTab(binding.tabs.newTab().setText("Hall of Fame"),1)
         binding.tabs.background.setTint(resources.getColor(R.color.light_blue_grey))
 
         TabLayoutMediator(binding.tabs,binding.viewPager){ tab, position ->
             when (position){
-                0 -> tab.text = "Your Score"
+                0 -> tab.text = "Your Top Score"
                 1 -> tab.text = "Hall of Fame"
             }
         }.attach()

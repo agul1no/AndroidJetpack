@@ -22,7 +22,7 @@ class ScoreFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentScoreBinding.inflate(inflater,container,false)
 
-        binding.tvScoreTitle.paint.isUnderlineText = true
+        //binding.tvScoreTitle.paint.isUnderlineText = true
 
         binding.backButtonScoreFragment.setOnClickListener {
             findNavController().navigate(R.id.action_viewPagerScoreFragment_to_mainFragment)
