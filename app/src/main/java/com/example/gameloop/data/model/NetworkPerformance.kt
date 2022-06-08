@@ -1,6 +1,7 @@
 package com.example.gameloop.data.model
 
-data class Performance(
+data class NetworkPerformance(
+    val performanceID: Long,
     val playerID: Long,
     val playerName: String,
     val score: Int,
