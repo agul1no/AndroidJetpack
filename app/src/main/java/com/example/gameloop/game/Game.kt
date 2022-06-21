@@ -18,7 +18,8 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
 
     private val OBJECT_INITIAL_VELOCITY = 16
     var enemyObjectVelocity = OBJECT_INITIAL_VELOCITY
-    private var enemyObject = EnemyObject(context,-200,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small),screenHeight) // creating an enemyObject for accessing the methods of the enemy class
+    //TODO remove enemyObject initialization if not needed
+    private var enemyObject = EnemyObject(context,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small),screenHeight, screenWidth) // creating an enemyObject for accessing the methods of the enemy class
     private var listOfEnemyObject = mutableListOf<EnemyObject>()
 
     private var paint: Paint = Paint()
@@ -98,7 +99,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
 
         /** creates an enemy object in a random position along the screen and updates its position */
         if(enemyObject.readyToSpawn()){
-            val newEnemy = EnemyObject(context,generateARandomXPosition(),0,enemyObject.generateImageRandomly(context),screenHeight)
+            val newEnemy = EnemyObject(context,0,enemyObject.generateImageRandomly(context),screenHeight, screenWidth)
             listOfEnemyObject.add(newEnemy)
         }
         for (item in listOfEnemyObject) {
@@ -123,9 +124,9 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
 
         /** checks if the player touches an enemy object, delete the object, update the lives and vibrates */
         val enemyObjectIterator = listOfEnemyObject.iterator()
-        for (i in enemyObjectIterator){
-            if (i.isPositionYOutOfView()) {enemyObjectIterator.remove()}
-            if ((i.positionY+100 > playerYPosition-350 && i.positionY+100<playerYPosition) && (i.positionX > playerXPosition-250 && i.positionX < playerXPosition+120)){
+        for (enemyObject in enemyObjectIterator){
+            if (enemyObject.isPositionYOutOfView()) {enemyObjectIterator.remove()}
+            if ((enemyObject.positionY+100 > playerYPosition-350 && enemyObject.positionY+100<playerYPosition) && (enemyObject.positionX > playerXPosition-250 && enemyObject.positionX < playerXPosition+120)){
                 enemyObjectIterator.remove()
                 playerLives--
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

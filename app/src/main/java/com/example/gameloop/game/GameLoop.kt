@@ -6,7 +6,7 @@ import android.os.Vibrator
 import android.view.SurfaceHolder
 import java.lang.Exception
 import java.lang.IllegalArgumentException
-
+//TODO remove enemyObject from the constructor if not needed
 class GameLoop(private var game: Game, private var surfaceHolder: SurfaceHolder, private val vibrator: Vibrator?,private var playerLives: Int, private var enemyObject: EnemyObject): Thread() {
 
     private var isRunning = false

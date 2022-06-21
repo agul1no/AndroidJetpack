@@ -7,14 +7,21 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import com.example.gameloop.R
 
-class EnemyObject(val context: Context, val positionX: Int, var positionY: Int, val image: Bitmap, val screenHeight: Int) {
+private const val INITIAL_SPAWN_PER_MINUTES = 70
 
-    private val INITAL_SPAWN_PER_MINUTES = 70
-    var spawnPerMinute = INITAL_SPAWN_PER_MINUTES
+class EnemyObject(val context: Context, var positionY: Int, val image: Bitmap, private val screenHeight: Int, private val screenWidth: Int) {
+
+    var positionX: Int = 0
+
+    //TODO move vars into the companion object
+    var spawnPerMinute = INITIAL_SPAWN_PER_MINUTES
     var spawnPerSeconds:Double = spawnPerMinute/60.0
     var updatesPerSpawn: Double = GameLoop.MAX_UPS/spawnPerSeconds
     var updatesUntilNextSpawn: Double = updatesPerSpawn
 
+    init {
+        positionX = generateARandomXPosition(screenWidth)
+    }
 
     fun draw(canvas: Canvas, positionX: Int, positionY: Int, image: Bitmap, paint: Paint){
         canvas.drawBitmap(image, positionX.toFloat(),positionY.toFloat(),paint)
@@ -25,7 +32,7 @@ class EnemyObject(val context: Context, val positionX: Int, var positionY: Int, 
     }
 
     fun isPositionYOutOfView(): Boolean{
-        return positionY > screenHeight + 100
+        return positionY > screenHeight
     }
 
     fun readyToSpawn(): Boolean{
@@ -51,5 +58,12 @@ class EnemyObject(val context: Context, val positionX: Int, var positionY: Int, 
         }
         return bitmap
     }
+
+    companion object{
+        fun generateARandomXPosition(screenWidth: Int): Int {
+            return (70..screenWidth - 100).random()
+        }
+    }
+
 
 }
