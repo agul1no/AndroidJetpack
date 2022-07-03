@@ -9,6 +9,4 @@ interface Repository {
     suspend fun insertPerformance(performance: LocalPerformance)
 
     suspend fun getPlayerPerformancesLocal(playerID: Long) : LiveData<List<LocalPerformance>>
-
-    suspend fun getPerformancesRemote() : LiveData<List<NetworkPerformance>>
 }

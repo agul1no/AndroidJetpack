@@ -1,19 +1,16 @@
 package com.example.gameloop.viewpagerscorefragments
 
-import android.content.res.ColorStateList
-import android.graphics.Color
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.gameloop.R
 import com.example.gameloop.databinding.FragmentViewPagerScoreBinding
 import com.example.gameloop.viewpagerscreens.HallOfFameFragment
 import com.example.gameloop.viewpagerscreens.ScoreFragment
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.fragment_view_pager_score.*
 
 class ViewPagerScoreFragment: Fragment() {
 

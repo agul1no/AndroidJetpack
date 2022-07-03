@@ -15,9 +15,6 @@ interface GameLoopDao {
     suspend fun insertPerformance(performance: LocalPerformance)
 
     @Query ("SELECT * FROM performance_table WHERE playerID LIKE :playerID ORDER BY score DESC LIMIT 20")
-    suspend fun getPlayerPerformancesLocal(playerID: Long) : LiveData<List<LocalPerformance>>
-
-    //TODO Retrofit implementation
-    suspend fun getPerformancesRemote() : LiveData<List<NetworkPerformance>>
+    fun getPlayerPerformancesLocal(playerID: Long) : LiveData<List<LocalPerformance>>
 
 }

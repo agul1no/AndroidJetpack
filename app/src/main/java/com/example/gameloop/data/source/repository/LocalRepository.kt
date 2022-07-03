@@ -14,8 +14,4 @@ class LocalRepository @Inject constructor(private val performanceLocalDatabase: 
     override suspend fun getPlayerPerformancesLocal(playerID: Long): LiveData<List<LocalPerformance>> {
         return performanceLocalDatabase.dao().getPlayerPerformancesLocal(playerID)
     }
-
-    override suspend fun getPerformancesRemote(): LiveData<List<NetworkPerformance>> {
-        return performanceLocalDatabase.dao().getPerformancesRemote()
-    }
 }
