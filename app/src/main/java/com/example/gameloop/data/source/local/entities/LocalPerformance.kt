@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity (tableName = "performance_table")
-data class DBPerformance(
+data class LocalPerformance(
     @PrimaryKey(autoGenerate = true)
     val performanceID: Long,
     val playerID: Long,

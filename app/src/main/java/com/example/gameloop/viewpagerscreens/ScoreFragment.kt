@@ -9,7 +9,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
 import com.example.gameloop.databinding.FragmentAfterGameBinding
 import com.example.gameloop.databinding.FragmentScoreBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ScoreFragment : Fragment() {
 
     private var _binding: FragmentScoreBinding? = null
