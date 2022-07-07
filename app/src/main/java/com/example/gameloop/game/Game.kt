@@ -129,9 +129,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
             if ((enemyObject.positionY+100 > playerYPosition-350 && enemyObject.positionY+100<playerYPosition) && (enemyObject.positionX > playerXPosition-250 && enemyObject.positionX < playerXPosition+120)){
                 enemyObjectIterator.remove()
                 playerLives--
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
-                }
+                vibrate(vibrator)
             }
         }
 
@@ -142,9 +140,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
             if ((item.positionY+100 > playerYPosition-350 && item.positionY+100<playerYPosition) && (item.positionX > playerXPosition-250 && item.positionX < playerXPosition+120)){
                 lifeObjectIterator.remove()
                 if(playerLives < 3){ playerLives++ }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
-                }
+                vibrate(vibrator)
             }
         }
         /** checks if the player touches a point object, delete the object, update the lives and vibrates */
@@ -156,9 +152,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
                 if(item.name == "ten"){ Score.scoreCounter += 10 }
                 if(item.name == "twenty"){ Score.scoreCounter += 20 }
                 if(item.name == "thirty"){ Score.scoreCounter += 30 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
-                }
+                vibrate(vibrator)
             }
         }
 
@@ -210,4 +204,9 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
         canvas?.drawText("FPS: $averageFPS",100f,350f, paint)
     }
 
+    private fun vibrate(vibrator: Vibrator?){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator?.vibrate(VibrationEffect.createOneShot(50,VibrationEffect.EFFECT_TICK))
+        }
+    }
 }
