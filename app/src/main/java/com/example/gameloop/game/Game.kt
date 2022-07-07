@@ -9,28 +9,33 @@ import android.view.SurfaceView
 import androidx.core.content.ContextCompat
 import com.example.gameloop.R
 import com.example.gameloop.fragments.GameFragment
+import com.example.gameloop.util.Constants.OBJECT_INITIAL_VELOCITY
+import com.example.gameloop.util.Constants.PLAYER_INITIAL_LIVES
 import kotlin.math.abs
 
 class Game(context: Context, private var screenWidth: Int, private var screenHeight: Int, vibrator: Vibrator?, private var fragment: GameFragment) : SurfaceView(context), SurfaceHolder.Callback{
 
-    private val PLAYER_INITIAL_LIVES = 3
     var playerLives = PLAYER_INITIAL_LIVES
 
-    private val OBJECT_INITIAL_VELOCITY = 16
     var enemyObjectVelocity = OBJECT_INITIAL_VELOCITY
+    val canvas = Canvas()
+
+
     //TODO remove enemyObject initialization if not needed
-    private var enemyObject = EnemyObject(context,0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small),screenHeight, screenWidth) // creating an enemyObject for accessing the methods of the enemy class
-    private var listOfEnemyObject = mutableListOf<EnemyObject>()
+    /** I need the enemyObject initialization to access and change the properties of the constructor */
+    private var enemyObject = EnemyObject(0, BitmapFactory.decodeResource(context.resources, R.mipmap.cake_object_small),screenHeight, screenWidth) // creating an enemyObject for accessing the methods of the enemy class
+    var listOfEnemyObject = mutableListOf<EnemyObject>()
 
     private var paint: Paint = Paint()
     private var surfaceView = holder
-    private var gameLoop = GameLoop(this, surfaceView,vibrator,playerLives, enemyObject)
+    private var gameLoop = GameLoop(context,this, surfaceView, screenWidth, screenHeight, vibrator)
+    private val gameStartAnimation = GameStartAnimation()
 
     private var player = Player(context)
     var playerXPosition = screenWidth / 2
     var playerYPosition = screenHeight* 4/5
 
-    private var life = Life(context, playerLives)
+    private var life = Life()
 
     private var lifeObject = LifeObject(context,-200,0,LifeObject.generateImageHealthyHeart(context),screenHeight)
     private var listOfLifeObject = mutableListOf<LifeObject>()
@@ -59,6 +64,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
         }
         if (playerXPosition < 150) playerXPosition = 150
         if (playerXPosition > screenWidth - 100) playerXPosition = screenWidth - 100
+        if (playerYPosition < 400) playerYPosition = 400
 
         invalidate()
         return true
@@ -67,7 +73,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
     override fun draw(canvas: Canvas) {
         super.draw(canvas)
 
-        val backgroundColor = ContextCompat.getColor(context, R.color.black)
+        val backgroundColor = ContextCompat.getColor(context, R.color.dark_blue)
         canvas.drawColor(backgroundColor)
         drawUPS(canvas)
         drawFPS(canvas)
@@ -75,6 +81,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
         player.draw(canvas, playerXPosition, playerYPosition)
         life.draw(canvas,screenWidth, 50, playerLives, context)
         score.draw(canvas,100, 120)
+        gameStartAnimation.draw(canvas, screenWidth, screenHeight, context)
 
         for (item in listOfEnemyObject){
             item.positionY = item.positionY + enemyObjectVelocity
@@ -98,8 +105,8 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
         score.update()
 
         /** creates an enemy object in a random position along the screen and updates its position */
-        if(enemyObject.readyToSpawn()){
-            val newEnemy = EnemyObject(context,0,enemyObject.generateImageRandomly(context),screenHeight, screenWidth)
+        if(EnemyObject.readyToSpawn()){
+            val newEnemy = EnemyObject(0,EnemyObject.generateImageRandomly(context),screenHeight, screenWidth)
             listOfEnemyObject.add(newEnemy)
         }
         for (item in listOfEnemyObject) {
@@ -178,6 +185,7 @@ class Game(context: Context, private var screenWidth: Int, private var screenHei
     /** implemented methods from SurfaceVIew */
     override fun surfaceCreated(surfaceHolder: SurfaceHolder) {
         gameLoop.startLoop()
+        listOfEnemyObject.clear()
     }
 
     override fun surfaceChanged(surfaceHolder: SurfaceHolder, p1: Int, p2: Int, p3: Int) {

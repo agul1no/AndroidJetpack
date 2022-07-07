@@ -23,14 +23,10 @@
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_gameFragment"
-            app:destination="@id/gameFragment"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/gameFragment" />
         <action
             android:id="@+id/action_mainFragment_to_viewPagerScoreFragment"
-            app:destination="@id/viewPagerScoreFragment"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
+            app:destination="@id/viewPagerScoreFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
@@ -40,6 +36,11 @@
         <action
             android:id="@+id/action_gameFragment_to_afterGameFragment"
             app:destination="@id/afterGameFragment"
+            app:popUpTo="@id/gameFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_gameFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
             app:popUpTo="@id/gameFragment"
             app:popUpToInclusive="true" />
     </fragment>

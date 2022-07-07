@@ -14,7 +14,7 @@ interface GameLoopDao {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPerformance(performance: LocalPerformance)
 
-    @Query ("SELECT * FROM performance_table WHERE playerID LIKE :playerID ORDER BY score DESC LIMIT 20")
+    @Query ("SELECT * FROM performance_table WHERE player_id LIKE :playerID ORDER BY score DESC LIMIT 20")
     fun getPlayerPerformancesLocal(playerID: Long) : LiveData<List<LocalPerformance>>
 
 }

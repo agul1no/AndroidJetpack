@@ -7,7 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import com.example.gameloop.R
 
-class Life(context: Context, private var playerLives: Int) {
+class Life() {
 
     var paint: Paint = Paint()
 
@@ -38,21 +38,21 @@ class Life(context: Context, private var playerLives: Int) {
     }
 
     private fun twoLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
         canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
+        //canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
     private fun oneLife(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
+        canvas.drawBitmap(generateImageHealthyHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
+        //canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
+        //canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
     private fun zeroLives(canvas: Canvas,context: Context,lifeX: Int,lifeY: Int){
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
-        canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
+        //canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-100,lifeY.toFloat(),paint)
+        //canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-200,lifeY.toFloat(),paint)
+        //canvas.drawBitmap(generateImageBrokenHeart(context), lifeX.toFloat()-300,lifeY.toFloat(),paint)
     }
 
     private fun generateImageHealthyHeart(context: Context): Bitmap {

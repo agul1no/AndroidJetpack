@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Vibrator
+import android.util.DisplayMetrics
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -13,12 +14,16 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.gameloop.databinding.ActivityMainBinding
+import com.example.gameloop.fragments.GameFragment
+import com.example.gameloop.game.Game
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private var navDestination: NavDestination? = null
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +44,18 @@ class MainActivity : AppCompatActivity() {
                 supportActionBar?.show()
                 //window.insetsController?.show(WindowInsets.Type.statusBars())
             }
+            navDestination = nd
+        }
+
+    }
+
+    override fun onBackPressed() {
+        when(navDestination?.id){
+            R.id.mainFragment -> { finish() }
+            R.id.splashFragment -> { finish() }
+            R.id.viewPagerScoreFragment -> { super.onBackPressed() }
+            R.id.gameFragment -> { super.onBackPressed() }
+            R.id.afterGameFragment -> { super.onBackPressed() }
         }
 
     }
