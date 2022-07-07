@@ -3,19 +3,11 @@ package com.example.gameloop
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Vibrator
-import android.util.DisplayMetrics
 import android.view.View
-import android.view.WindowInsets
-import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavDestination
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.gameloop.databinding.ActivityMainBinding
-import com.example.gameloop.fragments.GameFragment
-import com.example.gameloop.game.Game
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

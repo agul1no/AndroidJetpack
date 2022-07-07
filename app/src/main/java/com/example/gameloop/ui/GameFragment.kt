@@ -1,11 +1,10 @@
-package com.example.gameloop.fragments
+package com.example.gameloop.ui
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Vibrator
 import android.util.DisplayMetrics
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,6 @@ import androidx.core.content.getSystemService
 import androidx.navigation.fragment.findNavController
 import com.example.gameloop.R
 import com.example.gameloop.game.Game
-import java.util.*
-import kotlin.concurrent.schedule
 
 class GameFragment : Fragment(){//R.layout.fragment_game) {
 

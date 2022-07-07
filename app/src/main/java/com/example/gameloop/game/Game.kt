@@ -8,7 +8,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.core.content.ContextCompat
 import com.example.gameloop.R
-import com.example.gameloop.fragments.GameFragment
+import com.example.gameloop.ui.GameFragment
 import com.example.gameloop.util.Constants.OBJECT_INITIAL_VELOCITY
 import com.example.gameloop.util.Constants.PLAYER_INITIAL_LIVES
 import kotlin.math.abs

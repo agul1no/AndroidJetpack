@@ -1,4 +1,4 @@
-package com.example.gameloop.viewpagerscorefragments
+package com.example.gameloop.ui
 
 
 import android.os.Bundle
@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.gameloop.R
+import com.example.gameloop.adapter.ViewPagerScoreAdapter
 import com.example.gameloop.databinding.FragmentViewPagerScoreBinding
-import com.example.gameloop.viewpagerscreens.HallOfFameFragment
-import com.example.gameloop.viewpagerscreens.ScoreFragment
+import com.example.gameloop.ui.halloffamefragment.HallOfFameFragment
+import com.example.gameloop.ui.scorefragment.ScoreFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ViewPagerScoreFragment: Fragment() {

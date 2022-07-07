@@ -1,4 +1,4 @@
-package com.example.gameloop.fragments
+package com.example.gameloop.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

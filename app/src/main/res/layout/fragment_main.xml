@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg_splash"
-    tools:context=".fragments.MainFragment">
+    tools:context=".ui.MainFragment">
 
     <TextView
         android:id="@+id/tvWelcomeMessage"

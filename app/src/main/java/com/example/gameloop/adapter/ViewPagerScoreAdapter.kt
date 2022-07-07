@@ -1,4 +1,4 @@
-package com.example.gameloop.viewpagerscorefragments
+package com.example.gameloop.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

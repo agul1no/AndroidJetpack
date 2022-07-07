@@ -1,4 +1,4 @@
-package com.example.gameloop.viewpagerscreens
+package com.example.gameloop.ui.scorefragment
 
 import androidx.lifecycle.ViewModel
 import com.example.gameloop.data.source.repository.LocalRepository
