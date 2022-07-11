@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/afterGameFragment"
-        android:name="com.example.gameloop.ui.AfterGameFragment"
+        android:name="com.example.gameloop.ui.aftergamefragment.AfterGameFragment"
         android:label="fragment_after_game"
         tools:layout="@layout/fragment_after_game" >
         <action

@@ -1,6 +1,5 @@
-package com.example.gameloop.ui.scorefragment
+package com.example.gameloop.ui.aftergamefragment
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gameloop.data.source.local.entities.LocalPerformance
@@ -11,12 +10,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ScoreFragmentViewModel @Inject constructor(
+class AfterGameFragmentViewModel @Inject constructor(
     private val localRepository: LocalRepository
-): ViewModel() {
+): ViewModel(){
 
-    fun getPlayerPerformancesLocal(playerID: Long): LiveData<List<LocalPerformance>>{
-        return localRepository.getPlayerPerformancesLocal(playerID)
+    fun insertLocalPerformance(localPerformance: LocalPerformance){
+        viewModelScope.launch (Dispatchers.IO){
+            localRepository.insertPerformance(localPerformance)
+        }
     }
 
 }
