@@ -21,11 +21,11 @@ class MainFragment : Fragment() {
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater,container,false)
 
-        binding.tvStart.setOnClickListener {
+        binding.startButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_gameFragment)
         }
 
-        binding.tvScore.setOnClickListener {
+        binding.scoreButton.setOnClickListener {
             findNavController().navigate(R.id.action_mainFragment_to_viewPagerScoreFragment)
         }
 
