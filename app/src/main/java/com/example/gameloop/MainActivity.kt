@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.gameloop.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var navController: NavController
     private var navDestination: NavDestination? = null
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,22 +29,36 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        var navController = navHostFragment.navController
+        navController = configureNavController()
+        appBarConfiguration = configureAppBar(navController)
 
         navController.addOnDestinationChangedListener { _, nd: NavDestination, _ ->
             if (nd.id == R.id.splashFragment || nd.id == R.id.gameFragment) {
                 supportActionBar?.hide()
                 window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
-
-                //window.insetsController?.hide(WindowInsets.Type.statusBars())
             } else {
                 supportActionBar?.show()
-                //window.insetsController?.show(WindowInsets.Type.statusBars())
             }
             navDestination = nd
         }
 
+    }
+
+    private fun configureNavController(): NavController{
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
+        return navController
+    }
+
+    private fun configureAppBar(navController: NavController): AppBarConfiguration{
+        appBarConfiguration = AppBarConfiguration.Builder(navController.graph).build()
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.mainFragment, R.id.afterGameFragment))
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        return appBarConfiguration
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {

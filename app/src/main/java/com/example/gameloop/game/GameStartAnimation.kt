@@ -51,8 +51,8 @@ class GameStartAnimation() {
 //        )
         canvas.drawBitmap(
             generateImageNumberThree(context),
-            (screenWidth/2.2).toFloat(),
-            (screenHeight/4.2).toFloat(),
+            (screenWidth/2.4).toFloat(),
+            (screenHeight/4.4).toFloat(),
             paint
         )
     }
@@ -72,8 +72,8 @@ class GameStartAnimation() {
 //        )
         canvas.drawBitmap(
             generateImageNumberTwo(context),
-            (screenWidth/2.2).toFloat(),
-            (screenHeight/4.2).toFloat(),
+            (screenWidth/2.4).toFloat(),
+            (screenHeight/4.4).toFloat(),
             paint
         )
     }
@@ -93,8 +93,8 @@ class GameStartAnimation() {
 //        )
         canvas.drawBitmap(
             generateImageNumberOne(context),
-            (screenWidth/2.2).toFloat(),
-            (screenHeight/4.2).toFloat(),
+            (screenWidth/2.4).toFloat(),
+            (screenHeight/4.4).toFloat(),
             paint
         )
     }

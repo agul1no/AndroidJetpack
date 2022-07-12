@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.gameloop.ui.MainFragment"
-        android:label="fragment_main"
+        android:label="Jetpack Android"
         tools:layout="@layout/fragment_main" >
         <action
             android:id="@+id/action_mainFragment_to_gameFragment"
@@ -31,7 +31,7 @@
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.gameloop.ui.GameFragment"
-        android:label="fragment_game"
+        android:label="Game"
         tools:layout="@layout/fragment_game" >
         <action
             android:id="@+id/action_gameFragment_to_afterGameFragment"
@@ -47,7 +47,7 @@
     <fragment
         android:id="@+id/afterGameFragment"
         android:name="com.example.gameloop.ui.aftergamefragment.AfterGameFragment"
-        android:label="fragment_after_game"
+        android:label="Game Over"
         tools:layout="@layout/fragment_after_game" >
         <action
             android:id="@+id/action_afterGameFragment_to_mainFragment"
@@ -58,7 +58,7 @@
     <fragment
         android:id="@+id/viewPagerScoreFragment"
         android:name="com.example.gameloop.ui.ViewPagerScoreFragment"
-        android:label="fragment_view_pager_score"
+        android:label="Score"
         tools:layout="@layout/fragment_view_pager_score" >
         <action
             android:id="@+id/action_viewPagerScoreFragment_to_mainFragment"

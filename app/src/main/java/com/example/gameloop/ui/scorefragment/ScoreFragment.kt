@@ -39,9 +39,9 @@ class ScoreFragment : Fragment() {
                 adapter.setData(listLocalPerformances)
         })
 
-        binding.backButtonScoreFragment.setOnClickListener {
-            findNavController().navigate(R.id.action_viewPagerScoreFragment_to_mainFragment)
-        }
+//        binding.backButtonScoreFragment.setOnClickListener {
+//            findNavController().navigate(R.id.action_viewPagerScoreFragment_to_mainFragment)
+//        }
 
         return binding.root
     }
