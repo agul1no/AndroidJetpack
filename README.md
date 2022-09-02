@@ -1,6 +1,6 @@
 # AndroidJetpack
 
-<img src="https://github.com/agul1no/AndroidJetpack/blob/master/Mockup.png" width="800" height="400" />
+<img src="https://github.com/agul1no/AndroidJetpack/blob/master/Mockup.png" width="800" height="450" />
 
 Inspired on this conference "https://www.youtube.com/watch?v=rjlhSDhFwzM&t=410s"
 2019 about debudding tricks in android studio I have developed this game.
